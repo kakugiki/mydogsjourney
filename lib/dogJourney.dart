@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(new MyApp());
 }
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -26,19 +27,49 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String textToShow = "";
+
+  void addFoodTimeStamp() {
+    setState(() {
+      textToShow += DateTime.now().toString() + ' (Food)' + '\n';
+    });
+  }
+
+  void addWaterTimeStamp() {
+    setState(() {
+      textToShow += DateTime.now().toString() + ' (Water)'  + '\n';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
+      appBar: new AppBar(
         title: new Text('My Dog\'s Journey'),
-    ),
-    body:
-    new Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    mainAxisSize: MainAxisSize.max,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    ),
-
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(textToShow),
+          ],
+        ),
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: addFoodTimeStamp,
+            child: Icon(Icons.fastfood),
+          ),
+          FloatingActionButton(
+            onPressed: addWaterTimeStamp,
+            child: Icon(Icons.local_drink),
+          )
+        ],
+      ),
     );
   }
 }
