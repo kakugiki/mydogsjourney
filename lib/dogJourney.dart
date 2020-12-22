@@ -1,5 +1,5 @@
 import 'dart:collection';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
 
@@ -44,7 +44,41 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void eraseJourney() => journey.clear();
+  void showAlertDialog() {
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Continue"),
+      onPressed: () {
+        journey.clear();
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Heads-up"),
+      content: Text(
+          "Are you sure you want to clear this?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +92,11 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            for (var item in journey) Text(item, style: TextStyle(fontSize: 24))
+            for (var item in journey)
+              Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(item,
+                      style: TextStyle(fontSize: 24, color: Colors.indigo)))
           ],
         ),
       ),
@@ -67,23 +105,36 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           FloatingActionButton(
             onPressed: () async => addTimeStamp('Food'),
-            child: Icon(Icons.fastfood),
+            child: Icon(
+              FontAwesomeIcons.bone,
+              color: Colors.orangeAccent,
+            ),
           ),
           FloatingActionButton(
             onPressed: () async => addTimeStamp('Water'),
-            child: Icon(Icons.local_drink),
+            child: Icon(Icons.local_drink_outlined),
           ),
           FloatingActionButton(
             onPressed: () async => addTimeStamp('Pee'),
-            child: Icon(Icons.waves),
+            child: Icon(
+              Icons.waves,
+              color: Colors.yellow,
+            ),
           ),
           FloatingActionButton(
             onPressed: () async => addTimeStamp('Poop'),
-            child: Icon(Icons.location_on),
+            child: Icon(
+              Icons.location_on,
+              color: Colors.brown,
+            ),
           ),
           FloatingActionButton(
-            onPressed: eraseJourney,
-            child: Icon(Icons.remove_circle),
+            onPressed: showAlertDialog,
+            child: Icon(
+              FontAwesomeIcons.timesCircle,
+              color: Colors.red,
+            ),
+            // child: Icon(Icons.clear, color: Colors.red,),
           )
         ],
       ),
