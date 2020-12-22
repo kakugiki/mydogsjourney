@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:date_format/date_format.dart';
 
 void main() {
   runApp(new MyApp());
@@ -27,17 +28,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String category;
   String textToShow = "";
 
-  void addFoodTimeStamp() {
+  void addTimeStamp(category) {
     setState(() {
-      textToShow += DateTime.now().toString() + ' (Food)' + '\n';
-    });
-  }
-
-  void addWaterTimeStamp() {
-    setState(() {
-      textToShow += DateTime.now().toString() + ' (Water)'  + '\n';
+      textToShow =
+          formatDate(DateTime.now(), [mm, '/', dd, ' ', hh, ':', mm, ':', ss]) +
+              ' ( ' +
+              category +
+              ')' +
+              '\n' +
+              textToShow;
     });
   }
 
@@ -53,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(textToShow),
+            Text(textToShow, style: TextStyle(fontSize: 24)),
           ],
         ),
       ),
@@ -61,13 +63,21 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: addFoodTimeStamp,
+            onPressed: () async => addTimeStamp('Food'),
             child: Icon(Icons.fastfood),
           ),
           FloatingActionButton(
-            onPressed: addWaterTimeStamp,
+            onPressed: () async => addTimeStamp('Water'),
             child: Icon(Icons.local_drink),
-          )
+          ),
+          FloatingActionButton(
+            onPressed: () async => addTimeStamp('Pee'),
+            child: Icon(Icons.waves),
+          ),
+          FloatingActionButton(
+            onPressed: () async => addTimeStamp('Poop'),
+            child: Icon(Icons.location_on),
+          ),
         ],
       ),
     );
