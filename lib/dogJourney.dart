@@ -44,6 +44,13 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void deleteRecord() {
+    setState(() {
+      if (journey.length > 0)
+        journey.removeFirst();
+    });
+  }
+
   void showAlertDialog() {
     // set up the buttons
     Widget cancelButton = FlatButton(
@@ -55,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget continueButton = FlatButton(
       child: Text("Continue"),
       onPressed: () {
-        journey.clear();
+        deleteRecord();
         Navigator.of(context).pop();
       },
     );
@@ -64,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
     AlertDialog alert = AlertDialog(
       title: Text("Heads-up"),
       content: Text(
-          "Are you sure you want to clear this?"),
+          "Continue to delete last entry?"),
       actions: [
         cancelButton,
         continueButton,
@@ -117,14 +124,14 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             onPressed: () async => addTimeStamp('Pee'),
             child: Icon(
-              Icons.waves,
+              FontAwesomeIcons.tint,
               color: Colors.yellow,
             ),
           ),
           FloatingActionButton(
             onPressed: () async => addTimeStamp('Poop'),
             child: Icon(
-              Icons.location_on,
+              FontAwesomeIcons.mapMarkerAlt,
               color: Colors.brown,
             ),
           ),
