@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
 
@@ -29,19 +31,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String category;
-  String textToShow = "";
+  Queue<String> journey = new Queue<String>();
 
   void addTimeStamp(category) {
     setState(() {
-      textToShow =
+      if (journey.length > 16) journey.removeLast();
+      journey.addFirst(
           formatDate(DateTime.now(), [mm, '/', dd, ' ', hh, ':', mm, ':', ss]) +
               ' ( ' +
               category +
-              ')' +
-              '\n' +
-              textToShow;
+              ')');
     });
   }
+
+  void eraseJourney() => journey.clear();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(textToShow, style: TextStyle(fontSize: 24)),
+            for (var item in journey) Text(item, style: TextStyle(fontSize: 24))
           ],
         ),
       ),
@@ -78,6 +81,10 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () async => addTimeStamp('Poop'),
             child: Icon(Icons.location_on),
           ),
+          FloatingActionButton(
+            onPressed: eraseJourney,
+            child: Icon(Icons.remove_circle),
+          )
         ],
       ),
     );
