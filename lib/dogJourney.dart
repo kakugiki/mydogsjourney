@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       if (journey.length > 16) journey.removeLast();
       journey.addFirst(
-          formatDate(DateTime.now(), [mm, '/', dd, ' ', hh, ':', mm, ':', ss]) +
+          formatDate(DateTime.now(), [mm, '/', dd, ' ', hh, ':', nn, ':', ss]) +
               ' ( ' +
               category +
               ')');
