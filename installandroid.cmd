@@ -1,0 +1,1 @@
+adb install E:\App\flutterapp\android\app-debug.apk

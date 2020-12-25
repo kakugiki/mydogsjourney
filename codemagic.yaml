@@ -1,11 +1,9 @@
 workflows:
   my-workflow:
-    name: My workflow name
+    name: ipa
     instance_type: mac_mini
     max_build_duration: 60
     environment:
-      vars:
-        PUBLIC_ENV_VAR: "value here"
       flutter: stable
       xcode: latest
     cache:
@@ -20,7 +18,7 @@ workflows:
           source: true
       cancel_previous_builds: false
     scripts:
-      - ...
+      - xcode-project build-ipa --project "mydogjourney.xcodeproj" --scheme "mydogjourney"
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
@@ -28,7 +26,7 @@ workflows:
     publishing:
       email:
         recipients:
-          - name@example.com
+          - weihui.guo@gmail.com
       scripts:
         - echo 'Post-publish script'
 
