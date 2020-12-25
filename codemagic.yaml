@@ -1,0 +1,6 @@
+- xcode-project build-ipa --project "flutterapp.xcodeproj" --scheme "flutterapp"
+
+artifacts:
+  - build/ios/ipa/*.ipa
+  - /tmp/xcodebuild_logs/*.log
+  - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
